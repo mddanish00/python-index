@@ -1,0 +1,86 @@
+name: Upload GitHub Pages
+
+on:
+  # allow triggering manually
+  workflow_dispatch:
+
+  # allow programmatic triggers
+  repository_dispatch:
+
+  # run every night at 12am, UTC+8
+  schedule:
+    - cron: "0 8 * * *"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    outputs:
+      should_update: ${{ steps.update.outputs.should_update }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+            version: "latest"
+            enable-cache: true
+            python-version: 3.13
+
+      - name: Setup GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build site
+        run: |
+          uv sync
+          uv run ghpypi --output=docs --repositories=repositories.txt --token=${{ secrets.GITHUB_TOKEN }} --title="mddanish00 PyPI"
+
+      - name: Push pages updates
+        id: update
+        run: |
+          git add ./docs
+
+          if [[ $(git status --short | egrep "^A  docs/") == "" ]]; then
+            echo "No changes to commit."
+            echo "should_update=false" >> "$GITHUB_OUTPUT"
+          else
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
+            git commit -m "chore: automatic index update [skip ci]"
+            git push origin main
+            echo "should_update=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        if: ${{ steps.update.outputs.should_update }}
+        with:
+          path: ./docs
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    needs: [build]
+    if: ${{ needs.build.outputs.should_update }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment    
+        uses: actions/deploy-pages@v4

@@ -66,7 +66,7 @@ jobs:
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
-        if: ${{ steps.update.outputs.should_update }}
+        if: ${{ steps.update.outputs.should_update == true }}
         with:
           path: ./docs
 
@@ -78,7 +78,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     needs: [build]
-    if: ${{ needs.build.outputs.should_update }}
+    if: ${{ needs.build.outputs.should_update == true }}
 
     steps:
       - name: Deploy to GitHub Pages

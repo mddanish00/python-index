@@ -9,7 +9,7 @@ on:
 
   # run every night at 12am, UTC+8
   schedule:
-    - cron: "0 8 * * *"
+    - cron: "0 16 * * *"
 
 permissions:
   contents: write
@@ -37,7 +37,6 @@ jobs:
         with:
             version: "latest"
             enable-cache: true
-            python-version: 3.13
 
       - name: Setup GitHub Pages
         id: pages
@@ -48,25 +47,31 @@ jobs:
           uv sync
           uv run ghpypi --output=docs --repositories=repositories.txt --token=${{ secrets.GITHUB_TOKEN }} --title="mddanish00 PyPI"
 
-      - name: Push pages updates
+      - name: Check for changes and push pages updates
         id: update
         run: |
           git add ./docs
 
-          if [[ $(git status --short | egrep "^M  docs/") == "" ]]; then
-            echo "No changes to commit."
-            echo "should_update=false" >> "$GITHUB_OUTPUT"
-          else
+          # Check if there are staged changes in the docs directory
+          # git diff --staged --quiet exits with 0 if no changes, 1 if changes
+          if ! git diff --staged --quiet ./docs; then
+            echo "Changes detected in docs/. Committing and pushing..."
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git config --global user.name "github-actions[bot]"
             git commit -m "chore: automatic index update [skip ci]"
             git push origin main
+            echo "Setting should_update=true"
             echo "should_update=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No staged changes in docs/."
+            echo "Setting should_update=false"
+            echo "should_update=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
-        if: ${{ steps.update.outputs.should_update == true }}
+        # Compare against the string 'true'
+        if: steps.update.outputs.should_update == 'true'
         with:
           path: ./docs
 
@@ -78,7 +83,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     needs: [build]
-    if: ${{ needs.build.outputs.should_update == true }}
+    # Compare against the string 'true' using the needs context
+    if: needs.build.outputs.should_update == 'true'
 
     steps:
       - name: Deploy to GitHub Pages

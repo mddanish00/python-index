@@ -1,3 +1,2 @@
 mddanish00/stas-server
 cgohlke/pyicu-build
-mddanish00/pyicu-sdist

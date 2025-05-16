@@ -8,6 +8,3 @@ dependencies = [
 
 [[tool.uv.index]]
 url = "https://paullockaby.github.io/ghpypi/simple/"
-
-[tool.uv.sources]
-ghpypi = { url = "https://github.com/paullockaby/ghpypi/releases/download/v1.4.0/ghpypi-1.4.0-py3-none-any.whl" }

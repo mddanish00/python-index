@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
 
     outputs:
       should_update: ${{ steps.update.outputs.should_update }}
@@ -76,7 +76,7 @@ jobs:
           path: ./docs
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
 
     environment:
       name: github-pages

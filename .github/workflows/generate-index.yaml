@@ -1,4 +1,4 @@
-name: Upload GitHub Pages
+name: Build python-index
 
 on:
   # allow triggering manually

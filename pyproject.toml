@@ -8,3 +8,6 @@ dependencies = [
 
 [[tool.uv.index]]
 url = "https://paullockaby.github.io/ghpypi/simple/"
+
+[tool.uv.sources]
+ghpypi = { git = "https://github.com/mddanish00/ghpypi", branch = "add-duplicate-filename-logic" }

@@ -45,7 +45,7 @@ jobs:
       - name: Build site
         run: |
           uv sync
-          uv run ghpypi --output=docs --repositories=repositories.txt --token=${{ secrets.GITHUB_TOKEN }} --title="mddanish00 PyPI" --merge-duplicates
+          uv run ghpypi --output=docs --repositories=repositories.txt --token=${{ secrets.ACTION_SECRET }} --title="mddanish00 PyPI" --merge-duplicates
 
       - name: Check for changes and push pages updates
         id: update

@@ -231,7 +231,7 @@ wheels = [
 [[package]]
 name = "ghpypi"
 version = "0.0.0"
-source = { git = "https://github.com/mddanish00/ghpypi?branch=add-duplicate-filename-logic#0e69a6f5387cf2911a9d9aab715474ccf191e8fa" }
+source = { git = "https://github.com/mddanish00/ghpypi?branch=dev#ca48bd63463fd6bd1d1d25e8fa6f97931098ec69" }
 dependencies = [
     { name = "atomicwrites" },
     { name = "distlib" },
@@ -408,7 +408,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ghpypi", git = "https://github.com/mddanish00/ghpypi?branch=add-duplicate-filename-logic" }]
+requires-dist = [{ name = "ghpypi", git = "https://github.com/mddanish00/ghpypi?branch=dev" }]
 
 [[package]]
 name = "requests"

@@ -45,6 +45,7 @@ jobs:
       - name: Build site
         run: |
           uv sync
+          rm -rf ./docs
           uv run ghpypi --output=docs --repositories=repositories.txt --token=${{ secrets.ACTION_SECRET }} --title="mddanish00 PyPI" --merge-duplicates --exclude-prereleases
 
       - name: Check for changes and push pages updates

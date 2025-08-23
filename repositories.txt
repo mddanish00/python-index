@@ -2,5 +2,3 @@ mddanish00/stas-server
 mddanish00/stas-ln-translator
 cgohlke/pyicu-build
 mddanish00/pyicu-sdist
-google/sentencepiece
-mddanish00/temp-sentencepiece-build

@@ -46,7 +46,7 @@ jobs:
         run: |
           uv sync
           rm -rf ./docs
-          uv run ghpypi --output=docs --repositories=repositories.txt --token=${{ secrets.ACTION_SECRET }} --title="mddanish00 PyPI" --merge-duplicates --exclude-prereleases
+          uv run ghpypi --output=docs --repositories=repositories.txt --token=${{ secrets.ACTION_SECRET }} --title="mddanish00 PyPI" --merge-duplicates
 
       - name: Check for changes and push pages updates
         id: update

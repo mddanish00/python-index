@@ -274,7 +274,7 @@ wheels = [
 [[package]]
 name = "ghpypi"
 version = "0.0.0"
-source = { git = "https://github.com/mddanish00/ghpypi?branch=dev#6ff6fc981638544987cec74643f7eab8ccdcacad" }
+source = { git = "https://github.com/mddanish00/ghpypi#6ff6fc981638544987cec74643f7eab8ccdcacad" }
 dependencies = [
     { name = "aiohttp" },
     { name = "atomicwrites" },
@@ -643,7 +643,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ghpypi", git = "https://github.com/mddanish00/ghpypi?branch=dev" }]
+requires-dist = [{ name = "ghpypi", git = "https://github.com/mddanish00/ghpypi" }]
 
 [[package]]
 name = "typing-extensions"

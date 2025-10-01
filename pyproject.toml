@@ -10,4 +10,4 @@ dependencies = [
 url = "https://paullockaby.github.io/ghpypi/simple/"
 
 [tool.uv.sources]
-ghpypi = { git = "https://github.com/mddanish00/ghpypi", branch = "dev" }
+ghpypi = { git = "https://github.com/mddanish00/ghpypi" }
